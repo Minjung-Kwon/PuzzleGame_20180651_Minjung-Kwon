@@ -47,6 +47,7 @@ int main()
     //시작버튼, 끝내기버튼, 타이머 생성
     auto playButton = Object::create("Images-2/시작.png", first, 470, 100);
     auto endButton = Object::create("Images-2/end.png", scene, 1100, 50, false);
+    auto restartButton = Object::create("Images-2/restart.png", scene, 1100, 100, false);
     auto timer = Timer::create(300.f);
 
 
@@ -65,12 +66,20 @@ int main()
         return true;
     });
 
+    //게임 재시작 버튼. 다시 섞는다
+    restartButton->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
+        first->enter();
+        playButton->show();
+        return true;
+    });
+
 
 
     //시작 버튼 클릭
     playButton->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
         playButton->hide();
         endButton->show();
+        restartButton->show();
 
         timer->set(300.f);
         timer->start();
@@ -140,7 +149,7 @@ int main()
             endGame();
             return 0;
         }
-
+        
 
 
         //이동하는 p4(흰색)버튼     // 여기서부터 약간 오류가 있음.
